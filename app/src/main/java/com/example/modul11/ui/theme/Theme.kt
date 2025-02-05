@@ -9,28 +9,33 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.ViewCompat
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.modul11.Greetings
+
+// Define colors
+private val Navy = Color(0xFF001F3F)
+private val Chartreuse = Color(0xFF7FFF00)
+private val LightBlue = Color(0xFFADD8E6)
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    surface = Color.Blue,
+    onSurface = Navy,
+    primary = Navy,
+    onPrimary = Chartreuse
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    surface = Color.Blue,
+    onSurface = Color.White,
+    primary = LightBlue,
+    onPrimary = Navy
 )
 
 @Composable
@@ -45,9 +50,15 @@ fun Modul11Theme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
+    }
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
+            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = !darkTheme
+        }
     }
 
     MaterialTheme(
@@ -56,3 +67,19 @@ fun Modul11Theme(
         content = content
     )
 }
+
+@Preview(
+    showBackground = true,
+    widthDp = 320,
+    uiMode = UI_MODE_NIGHT_YES,
+    name = "GreetingPreviewDark"
+)
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun GreetingPreview() {
+    Modul11Theme {
+        Greetings()
+    }
+}
+
+
