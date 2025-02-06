@@ -24,6 +24,7 @@ private val Navy = Color(0xFF001F3F)
 private val Chartreuse = Color(0xFF7FFF00)
 private val LightBlue = Color(0xFFADD8E6)
 
+// Define color schemes
 private val DarkColorScheme = darkColorScheme(
     surface = Color.Blue,
     onSurface = Navy,
@@ -32,7 +33,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    surface = Color.Blue,
+    surface = Color.Blue, // Menggunakan Color.Blue sesuai dengan permintaan
     onSurface = Color.White,
     primary = LightBlue,
     onPrimary = Navy
@@ -81,5 +82,3 @@ fun GreetingPreview() {
         Greetings()
     }
 }
-
-
